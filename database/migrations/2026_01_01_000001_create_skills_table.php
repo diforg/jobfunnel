@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('skills', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('category')->nullable();
             $table->enum('proficiency', ['beginner', 'intermediate', 'expert'])->default('intermediate');
             $table->timestamps();

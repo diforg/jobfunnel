@@ -1,0 +1,99 @@
+version: '3.9'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: jobfunnel_postgres
+    environment:
+      POSTGRES_USER: ${DB_USERNAME:-jobfunnel}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-secret}
+      POSTGRES_DB: ${DB_DATABASE:-jobfunnel}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-jobfunnel}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - jobfunnel_network
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: jobfunnel_redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - jobfunnel_network
+
+  # PHP-FPM Application
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile.php
+    container_name: jobfunnel_php
+    # Only infrastructure vars are set here — Laravel app vars are read from .env by the container
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_DATABASE=${DB_DATABASE:-jobfunnel}
+      - DB_USERNAME=${DB_USERNAME:-jobfunnel}
+      - DB_PASSWORD=${DB_PASSWORD:-secret}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./:/var/www/html
+      - /var/www/html/vendor
+      - /var/www/html/node_modules
+    networks:
+      - jobfunnel_network
+
+  # Node.js for Asset Building
+  node:
+    build:
+      context: .
+      dockerfile: Dockerfile.node
+    container_name: jobfunnel_node
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    working_dir: /app
+    command: npm run dev
+    networks:
+      - jobfunnel_network
+
+  # Nginx Web Server
+  nginx:
+    image: nginx:latest
+    container_name: jobfunnel_nginx
+    ports:
+      - "8080:80"
+    depends_on:
+      - php
+    volumes:
+      - ./:/var/www/html
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
+    networks:
+      - jobfunnel_network
+
+volumes:
+  postgres_data:
+
+networks:
+  jobfunnel_network:
+    driver: bridge

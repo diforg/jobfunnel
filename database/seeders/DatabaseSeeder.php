@@ -2,23 +2,31 @@
 
 namespace Database\Seeders;
 
-use App\Models\Job;
-use App\Models\JobContact;
-use App\Models\JobSkill;
-use App\Models\JobTimeline;
-use App\Models\Resume;
-use App\Models\Skill;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        $this->seedSkills();
-        $this->seedJobs();
+        $user = $this->seedUser();
+
+        $this->seedSkills($user);
+        $this->seedJobs($user);
     }
 
-    private function seedSkills(): void
+    private function seedUser(): User
+    {
+        return User::updateOrCreate(
+            ['email' => 'user@user.com.br'],
+            [
+                'name' => 'User',
+                'password' => 'senha123',
+            ]
+        );
+    }
+
+    private function seedSkills(User $user): void
     {
         $skills = [
             ['name' => 'PHP', 'category' => 'Backend', 'proficiency' => 'expert'],
@@ -39,11 +47,14 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($skills as $skill) {
-            Skill::create($skill);
+            $user->skills()->updateOrCreate(
+                ['name' => $skill['name']],
+                $skill,
+            );
         }
     }
 
-    private function seedJobs(): void
+    private function seedJobs(User $user): void
     {
         $jobs = [
             [
@@ -359,7 +370,17 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($jobs as $jobData) {
-            $job = Job::create($jobData['job']);
+            $job = $user->jobs()->updateOrCreate(
+                [
+                    'title' => $jobData['job']['title'],
+                    'company' => $jobData['job']['company'],
+                ],
+                $jobData['job'],
+            );
+
+            $job->contacts()->delete();
+            $job->skills()->delete();
+            $job->timelines()->delete();
 
             foreach ($jobData['contacts'] as $contact) {
                 $job->contacts()->create($contact);

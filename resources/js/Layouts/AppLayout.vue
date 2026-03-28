@@ -18,7 +18,19 @@
             <header class="bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between shrink-0">
                 <h2 class="text-base font-semibold text-gray-900">{{ title }}</h2>
                 <div class="flex items-center gap-3">
+                    <div v-if="user" class="hidden sm:flex flex-col items-end leading-tight">
+                        <span class="text-sm font-medium text-gray-900">{{ user.name }}</span>
+                        <span class="text-xs text-gray-500">{{ user.email }}</span>
+                    </div>
                     <slot name="actions" />
+                    <Link
+                        :href="route('logout')"
+                        method="post"
+                        as="button"
+                        class="inline-flex items-center px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-lg border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors"
+                    >
+                        Sair
+                    </Link>
                 </div>
             </header>
 
@@ -48,6 +60,7 @@ defineProps({
 
 const page = usePage()
 const url = computed(() => page.url)
+const user = computed(() => page.props.auth?.user ?? null)
 
 function navClass(href) {
     const active = href === '/' ? url.value === '/' : url.value.startsWith(href)

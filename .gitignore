@@ -1,0 +1,32 @@
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Dependencies
+vendor/
+node_modules/
+
+# Build artifacts
+public/build/
+public/hot
+
+# Runtime and temporary files
+storage/logs/*.log
+storage/framework/cache/data/*
+storage/framework/sessions/*
+storage/framework/views/*
+bootstrap/cache/*.php
+
+# Keep placeholder files tracked
+!storage/.gitkeep
+!storage/framework/.gitkeep
+!storage/logs/.gitkeep
+!bootstrap/cache/.gitkeep
+
+# IDE and OS files
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store

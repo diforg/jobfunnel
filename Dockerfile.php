@@ -1,4 +1,20 @@
+ARG APP_ENV=development
+
+FROM node:20-alpine AS assets
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY resources ./resources
+COPY public ./public
+COPY vite.config.js ./
+COPY postcss.config.cjs ./
+COPY tailwind.config.cjs ./
+RUN npm run build
+
 FROM php:8.3-fpm-alpine
+
+ARG APP_ENV=development
+ENV APP_ENV=${APP_ENV}
 
 # Install system dependencies
 RUN apk add --no-cache \
@@ -40,12 +56,19 @@ WORKDIR /var/www/html
 # Copy application files
 COPY . .
 
+# Copy built frontend assets (used in production mode)
+COPY --from=assets /app/public/build /var/www/html/public/build
+
 # Create storage and bootstrap/cache directories
 RUN mkdir -p storage/logs storage/framework/cache storage/framework/sessions storage/framework/views bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
-# Install PHP dependencies (include dev packages for local development/test tooling)
-RUN composer install --no-interaction --optimize-autoloader 2>&1 || true
+# Install PHP dependencies according to target environment
+RUN if [ "$APP_ENV" = "production" ]; then \
+            composer install --no-dev --no-interaction --optimize-autoloader --classmap-authoritative; \
+        else \
+            composer install --no-interaction --optimize-autoloader; \
+        fi
 
 # Create non-root user
 RUN addgroup -g 1000 laravel && adduser -D -u 1000 -G laravel laravel

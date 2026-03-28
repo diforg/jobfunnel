@@ -17,11 +17,18 @@ echo "Database is ready!"
 # This avoids boot failures when cached providers reference missing packages.
 rm -f /var/www/html/bootstrap/cache/*.php 2>/dev/null || true
 
-# Ensure dependencies are available. In this dev environment we need dev packages
-# (e.g., nunomaduro/collision) for Artisan and tests to boot reliably.
-if [ ! -f "/var/www/html/vendor/autoload.php" ] || [ ! -f "/var/www/html/vendor/nunomaduro/collision/src/Adapters/Laravel/CollisionServiceProvider.php" ]; then
-  echo "Installing composer dependencies (with dev packages)..."
-  composer install --no-interaction --optimize-autoloader
+# Ensure dependencies are available according to selected environment.
+if [ "${APP_ENV:-development}" = "production" ]; then
+  if [ ! -f "/var/www/html/vendor/autoload.php" ]; then
+    echo "Installing composer dependencies (production mode)..."
+    composer install --no-dev --no-interaction --optimize-autoloader --classmap-authoritative
+  fi
+else
+  # Development/test mode needs dev packages (e.g., nunomaduro/collision).
+  if [ ! -f "/var/www/html/vendor/autoload.php" ] || [ ! -f "/var/www/html/vendor/nunomaduro/collision/src/Adapters/Laravel/CollisionServiceProvider.php" ]; then
+    echo "Installing composer dependencies (development mode)..."
+    composer install --no-interaction --optimize-autoloader
+  fi
 fi
 
 # Only generate app key if APP_KEY is empty in .env

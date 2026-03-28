@@ -5,6 +5,7 @@ use App\Models\JobContact;
 use App\Models\JobSkill;
 use App\Models\JobTimeline;
 use App\Models\Skill;
+use App\Models\User;
 
 describe('Job model', function () {
     it('uses UUIDs as primary key', function () {
@@ -107,8 +108,11 @@ describe('Skill model', function () {
         expect($names)->toEqual(['Alpine', 'Laravel', 'Zend']);
     });
 
-    it('requires a unique name', function () {
-        Skill::factory()->create(['name' => 'Laravel']);
+    it('requires a unique name per user', function () {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        Skill::factory()->create(['name' => 'Laravel']); // auto user_id = $user->id
 
         expect(fn () => Skill::factory()->create(['name' => 'Laravel']))
             ->toThrow(\Illuminate\Database\QueryException::class);

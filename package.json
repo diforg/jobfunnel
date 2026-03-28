@@ -18,5 +18,8 @@
         "tailwindcss": "^3.4",
         "vite": "^5.0",
         "vue": "^3.4"
+    },
+    "dependencies": {
+        "ziggy-js": "^2.6.2"
     }
 }

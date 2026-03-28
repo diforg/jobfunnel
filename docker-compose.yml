@@ -74,7 +74,7 @@ services:
       - ./:/app
       - /app/node_modules
     working_dir: /app
-    command: npm run dev
+    command: sh -lc "if [ ! -d node_modules/ziggy-js ]; then npm install; fi && npm run dev -- --host 0.0.0.0"
     networks:
       - jobfunnel_network
 

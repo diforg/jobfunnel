@@ -4,9 +4,12 @@ use App\Models\Job;
 use App\Models\JobContact;
 use App\Models\JobSkill;
 use App\Models\JobTimeline;
+use App\Models\User;
 
 describe('Job contacts (web nested routes)', function () {
     it('stores a contact and redirects back', function () {
+        $user = User::factory()->create();
+        $this->actingAs($user);
         $job = Job::factory()->create();
 
         $this->post("/jobs/{$job->id}/contacts", [
@@ -18,6 +21,8 @@ describe('Job contacts (web nested routes)', function () {
     });
 
     it('deletes a contact and redirects back', function () {
+        $user = User::factory()->create();
+        $this->actingAs($user);
         $job     = Job::factory()->create();
         $contact = JobContact::factory()->for($job)->create();
 
@@ -26,6 +31,8 @@ describe('Job contacts (web nested routes)', function () {
     });
 
     it('requires name when creating a contact', function () {
+        $user = User::factory()->create();
+        $this->actingAs($user);
         $job = Job::factory()->create();
 
         $this->post("/jobs/{$job->id}/contacts", ['role' => 'HR'])
@@ -35,6 +42,8 @@ describe('Job contacts (web nested routes)', function () {
 
 describe('Job skills (web nested routes)', function () {
     it('stores a job skill and redirects back', function () {
+        $user = User::factory()->create();
+        $this->actingAs($user);
         $job = Job::factory()->create();
 
         $this->post("/jobs/{$job->id}/skills", [
@@ -46,6 +55,8 @@ describe('Job skills (web nested routes)', function () {
     });
 
     it('deletes a job skill and redirects back', function () {
+        $user = User::factory()->create();
+        $this->actingAs($user);
         $job      = Job::factory()->create();
         $jobSkill = JobSkill::factory()->for($job)->create();
 
@@ -54,6 +65,8 @@ describe('Job skills (web nested routes)', function () {
     });
 
     it('requires skill_name and level when creating a job skill', function () {
+        $user = User::factory()->create();
+        $this->actingAs($user);
         $job = Job::factory()->create();
 
         $this->post("/jobs/{$job->id}/skills", [])
@@ -63,6 +76,8 @@ describe('Job skills (web nested routes)', function () {
 
 describe('Job timelines (web nested routes)', function () {
     it('stores a timeline entry and redirects back', function () {
+        $user = User::factory()->create();
+        $this->actingAs($user);
         $job = Job::factory()->create();
 
         $this->post("/jobs/{$job->id}/timelines", [
@@ -74,6 +89,8 @@ describe('Job timelines (web nested routes)', function () {
     });
 
     it('deletes a timeline entry and redirects back', function () {
+        $user = User::factory()->create();
+        $this->actingAs($user);
         $job      = Job::factory()->create();
         $timeline = JobTimeline::factory()->for($job)->create();
 
@@ -82,6 +99,8 @@ describe('Job timelines (web nested routes)', function () {
     });
 
     it('requires stage and happened_at when creating a timeline entry', function () {
+        $user = User::factory()->create();
+        $this->actingAs($user);
         $job = Job::factory()->create();
 
         $this->post("/jobs/{$job->id}/timelines", [])

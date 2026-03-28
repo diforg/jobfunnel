@@ -10,10 +10,11 @@ return new class extends Migration
     {
         Schema::create('skills', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name')->unique();
+            $table->string('name');
             $table->string('category')->nullable();
             $table->enum('proficiency', ['beginner', 'intermediate', 'expert'])->default('intermediate');
             $table->timestamps();
+            // user_id is added via migration 000009; unique index is (user_id, name)
         });
     }
 

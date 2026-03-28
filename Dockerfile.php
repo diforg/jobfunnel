@@ -31,9 +31,6 @@ RUN pecl install redis && docker-php-ext-enable redis
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Install Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
 # Configure git to allow this directory (fix for composer)
 RUN git config --global --add safe.directory /var/www/html
 
@@ -47,8 +44,8 @@ COPY . .
 RUN mkdir -p storage/logs storage/framework/cache storage/framework/sessions storage/framework/views bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
-# Install PHP dependencies (skip dev for now, will install after container starts)
-RUN composer install --no-interaction --optimize-autoloader --no-dev 2>&1 || true
+# Install PHP dependencies (include dev packages for local development/test tooling)
+RUN composer install --no-interaction --optimize-autoloader 2>&1 || true
 
 # Create non-root user
 RUN addgroup -g 1000 laravel && adduser -D -u 1000 -G laravel laravel

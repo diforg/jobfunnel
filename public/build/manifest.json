@@ -1,0 +1,162 @@
+{
+  "_AppLayout-CCaJLFK8.js": {
+    "file": "assets/AppLayout-CCaJLFK8.js",
+    "name": "AppLayout",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_PrimaryButton-DETHxm8V.js": {
+    "file": "assets/PrimaryButton-DETHxm8V.js",
+    "name": "PrimaryButton",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_SecondaryButton-Cu0LOvoC.js": {
+    "file": "assets/SecondaryButton-Cu0LOvoC.js",
+    "name": "SecondaryButton",
+    "imports": [
+      "resources/js/app.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "_StatusBadge-BT0twLwK.js": {
+    "file": "assets/StatusBadge-BT0twLwK.js",
+    "name": "StatusBadge",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "__plugin-vue_export-helper-DlAUqK2U.js": {
+    "file": "assets/_plugin-vue_export-helper-DlAUqK2U.js",
+    "name": "_plugin-vue_export-helper"
+  },
+  "resources/js/Pages/Dashboard/Index.vue": {
+    "file": "assets/Index-B-RdOhGs.js",
+    "name": "Index",
+    "src": "resources/js/Pages/Dashboard/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_AppLayout-CCaJLFK8.js",
+      "_StatusBadge-BT0twLwK.js",
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/Pages/Jobs/Create.vue": {
+    "file": "assets/Create-dGe55zBC.js",
+    "name": "Create",
+    "src": "resources/js/Pages/Jobs/Create.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-CCaJLFK8.js",
+      "_SecondaryButton-Cu0LOvoC.js",
+      "_PrimaryButton-DETHxm8V.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/Jobs/Edit.vue": {
+    "file": "assets/Edit-B8OGvdSt.js",
+    "name": "Edit",
+    "src": "resources/js/Pages/Jobs/Edit.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-CCaJLFK8.js",
+      "_SecondaryButton-Cu0LOvoC.js",
+      "_PrimaryButton-DETHxm8V.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/Jobs/Index.vue": {
+    "file": "assets/Index-BQV589I9.js",
+    "name": "Index",
+    "src": "resources/js/Pages/Jobs/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_AppLayout-CCaJLFK8.js",
+      "_StatusBadge-BT0twLwK.js",
+      "_PrimaryButton-DETHxm8V.js",
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/Pages/Jobs/Show.vue": {
+    "file": "assets/Show-DrDTWMqZ.js",
+    "name": "Show",
+    "src": "resources/js/Pages/Jobs/Show.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-CCaJLFK8.js",
+      "_StatusBadge-BT0twLwK.js",
+      "_SecondaryButton-Cu0LOvoC.js",
+      "_PrimaryButton-DETHxm8V.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/Skills/Create.vue": {
+    "file": "assets/Create-B9NrOlvC.js",
+    "name": "Create",
+    "src": "resources/js/Pages/Skills/Create.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-CCaJLFK8.js",
+      "_SecondaryButton-Cu0LOvoC.js",
+      "_PrimaryButton-DETHxm8V.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/Skills/Edit.vue": {
+    "file": "assets/Edit-DP8R47Xl.js",
+    "name": "Edit",
+    "src": "resources/js/Pages/Skills/Edit.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js",
+      "_AppLayout-CCaJLFK8.js",
+      "_SecondaryButton-Cu0LOvoC.js",
+      "_PrimaryButton-DETHxm8V.js",
+      "__plugin-vue_export-helper-DlAUqK2U.js"
+    ]
+  },
+  "resources/js/Pages/Skills/Index.vue": {
+    "file": "assets/Index-D4D8Vn-0.js",
+    "name": "Index",
+    "src": "resources/js/Pages/Skills/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_AppLayout-CCaJLFK8.js",
+      "_PrimaryButton-DETHxm8V.js",
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/Pages/Welcome.vue": {
+    "file": "assets/Welcome-bVfi2abu.js",
+    "name": "Welcome",
+    "src": "resources/js/Pages/Welcome.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "__plugin-vue_export-helper-DlAUqK2U.js",
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-_HIYKUvJ.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "dynamicImports": [
+      "resources/js/Pages/Dashboard/Index.vue",
+      "resources/js/Pages/Jobs/Create.vue",
+      "resources/js/Pages/Jobs/Edit.vue",
+      "resources/js/Pages/Jobs/Index.vue",
+      "resources/js/Pages/Jobs/Show.vue",
+      "resources/js/Pages/Skills/Create.vue",
+      "resources/js/Pages/Skills/Edit.vue",
+      "resources/js/Pages/Skills/Index.vue",
+      "resources/js/Pages/Welcome.vue"
+    ]
+  }
+}

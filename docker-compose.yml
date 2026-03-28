@@ -68,6 +68,8 @@ services:
       context: .
       dockerfile: Dockerfile.node
     container_name: jobfunnel_node
+    ports:
+      - "5173:5173"
     volumes:
       - ./:/app
       - /app/node_modules
